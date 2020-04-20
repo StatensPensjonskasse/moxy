@@ -5,6 +5,7 @@
     "sourceMap": true,
     "noImplicitAny": true,
     "removeComments": true,
+    "esModuleInterop": true,
     "module": "commonjs",
     "lib": ["dom", "es5", "es6"],
     "listEmittedFiles": true,

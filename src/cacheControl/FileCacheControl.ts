@@ -8,13 +8,13 @@ export const fileCacheControl = (
   let cache: any = {};
   const cacheFile = path.join(process.cwd(), relativeFileName);
 
-  fs.exists(cacheFile, (exists) => {
+  fs.exists(cacheFile, (exists: boolean) => {
     if (!exists) {
-      fs.writeFile(cacheFile, JSON.stringify({}), (err) => {
+      fs.writeFile(cacheFile, JSON.stringify({}), (err: Error) => {
         if (err) throw err;
       });
     } else {
-      fs.readFile(cacheFile, 'utf8', (err, data) => {
+      fs.readFile(cacheFile, 'utf8', (err: Error, data: any) => {
         if (err) throw err;
         cache = JSON.parse(data);
       });
@@ -35,7 +35,7 @@ export const fileCacheControl = (
         }
       }
 
-      return fs.writeFile(cacheFile, JSON.stringify(cache), (err) => {
+      return fs.writeFile(cacheFile, JSON.stringify(cache), (err: Error) => {
         if (err) return reject('Could not write to file');
         return resolve(value);
       });
