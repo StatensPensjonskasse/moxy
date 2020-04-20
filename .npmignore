@@ -1,0 +1,17 @@
+.editorconfig
+.git
+.gitignore
+.idea
+.npmignore
+.npmrc
+.prettierignore
+.eslintrc.json
+.vscode
+*.iml
+coverage
+node_modules/
+npm-cache/
+src/
+tests/
+dist/tests
+Jenkinsfile

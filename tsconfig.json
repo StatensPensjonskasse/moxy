@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "module": "commonjs",
+    "lib": ["dom", "es5", "es6"],
+    "listEmittedFiles": true,
+    "target": "es5",
+    "allowJs": false,
+    "typeRoots": ["node_modules/@types"],
+    "declaration": true
+  },
+  "exclude": ["dist", "tests", "node_modules"]
+}

@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier"],
+  "rules": {
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/triple-slash-reference": "off"
+  }
+}

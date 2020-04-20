@@ -1,0 +1,7 @@
+.git
+.idea
+.vscode
+coverage
+*.iml
+dist
+node_modules/
