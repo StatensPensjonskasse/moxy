@@ -2,6 +2,8 @@
 
 ![Moxy, The Good Guy in the Middle](./designs/moxy-logo-tagline.png)
 
+![Node.js CI](https://github.com/StatensPensjonskasse/moxy/workflows/Node.js%20CI/badge.svg?branch=master)
+
 ## Q&A
 
 ### What does Moxy solve?
