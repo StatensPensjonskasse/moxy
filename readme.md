@@ -152,6 +152,25 @@ app.use(moxy({
 app.listen(1337);
 ```
 
+## Using File Cache Control
+
+How to use Moxy with a static file cache.
+`fileCacheControl` takes one argument, the relative file to a JSON file containing the cache.
+When the application with Moxy starts
+
+
+```javascript
+const express = require('express');
+const { moxy, fileCacheControl } = require('@statenspensjonskasse/moxy');
+const app = express();
+
+app.use(moxy({
+  cacheControl: fileCacheControl('/relative/file/path/to/run/cache.json'),
+));
+
+app.listen(1337);
+```
+
 ## Using Your Own Cache Control
 
 ```javascript
