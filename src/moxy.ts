@@ -81,7 +81,8 @@ export default ({
 
           if (
             headers['content-type'] !== undefined &&
-            headers['content-type'].indexOf('json') > -1
+            headers['content-type'].indexOf('json') > -1 &&
+            isNaN(Number(data.body))
           ) {
             return res.send(JSON.parse(data.body));
           }
@@ -104,7 +105,8 @@ export default ({
 
           if (
             headers['content-type'] !== undefined &&
-            headers['content-type'].indexOf('json') > -1
+            headers['content-type'].indexOf('json') > -1 &&
+            isNaN(Number(data.body))
           ) {
             return res.send(JSON.parse(data.body));
           }
