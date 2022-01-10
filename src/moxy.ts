@@ -1,6 +1,11 @@
 import { memoryCacheControl } from './cacheControl/MemoryCacheControl';
 import { getMode, MoxyMode, setMode } from './types';
 
+export interface ErrorType {
+  status: number;
+  message: string;
+}
+
 export default ({
   cacheControl = memoryCacheControl(),
   transformer = (data: any): any => data,
@@ -112,9 +117,9 @@ export default ({
           }
           return res.send(data.body);
         })
-        .catch(() => {
+        .catch((error: ErrorType) => {
           if (req.method === 'GET') {
-            return res.status(404).send('Moxy did not find anything');
+            return res.status(error.status).send(error.message);
           } else {
             return res.sendStatus(405);
           }
