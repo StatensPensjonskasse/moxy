@@ -1,4 +1,5 @@
 import { CacheControl } from '../types';
+import { ErrorType } from '../moxy';
 
 interface MongooseType {
   Schema: any;
@@ -11,6 +12,7 @@ interface Entry {
   method: string;
   headers: string;
   body: any;
+  lastFetched: Date;
 }
 
 export const mongoDbCacheControl = (mongoose: MongooseType): CacheControl => {
@@ -33,6 +35,10 @@ export const mongoDbCacheControl = (mongoose: MongooseType): CacheControl => {
       body: {
         type: mongoose.Schema.Types.Mixed,
       },
+      lastFetched: {
+        type: mongoose.Schema.Types.Date,
+        default: new Date(),
+      },
     });
 
     model = mongoose.model('record', schema);
@@ -46,27 +52,39 @@ export const mongoDbCacheControl = (mongoose: MongooseType): CacheControl => {
       method: databaseRow.method,
       headers: databaseRow.headers,
       body: databaseRow.body,
+      lastFetched: databaseRow.lastFetched,
     };
   };
 
   const findRow = (uri: string, method: string): Promise<any> => {
     return new Promise((resolve, reject) => {
+      let row: Entry = undefined;
       getModel()
         .find({
           uri,
+          method,
         })
-        .then((e: any) => {
-          if (e.length === 0) {
-            return reject();
+        .then((rows: Entry[]) => {
+          if (rows.length === 0) {
+            return reject({
+              status: 404,
+              message: 'Moxy did not find anything',
+            });
           }
-
-          for (let i = 0; i < e.length; e++) {
-            if (e[i].method === method) {
-              return resolve(e[i]);
-            }
+          if (rows.length > 1) {
+            return reject({
+              status: 500,
+              message:
+                'Corrupted state, Moxy found more than one record for uri',
+            });
           }
+          row = rows[0];
+          row.lastFetched = new Date();
 
-          return reject();
+          return getModel().updateOne({ uri, method }, row);
+        })
+        .then(() => {
+          return resolve(row);
         });
     });
   };
@@ -97,8 +115,8 @@ export const mongoDbCacheControl = (mongoose: MongooseType): CacheControl => {
         .then((row: any) => {
           return resolve(mapResult(row));
         })
-        .catch(() => {
-          return reject();
+        .catch((error: ErrorType) => {
+          return reject(error);
         });
     });
   };
