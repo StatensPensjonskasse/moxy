@@ -5,8 +5,7 @@ export const moxyRouter = (): Express.Router => {
   const router = Express.Router();
 
   router.post('/moxy/mode', (req: any, res: any): any => {
-    const status = req.query.status?.toUpperCase();
-    // @ts-ignore
+    const status: MoxyMode = req.query.status?.toUpperCase();
     if (MoxyMode[status] !== undefined) {
       setMode(status);
       return res.send(status);
